@@ -1,0 +1,2 @@
+# litecoin-mining
+Testnet
