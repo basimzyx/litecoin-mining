@@ -1,0 +1,314 @@
+/* Reset default browser styles */
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box 100px;
+}
+
+
+/* Body and overall page layout */
+body {
+    font-family: 'Noto Kufi Arabic', sans-serif;
+    background: linear-gradient(120deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background-size: 300% 300%; /* To allow animation over a large gradient */
+    animation: gradientBackground 10s ease infinite; /* Add animation to the background */
+    color: #333;
+    padding: 0;
+    margin: 0;
+}
+
+/* Keyframes for the background animation */
+@keyframes gradientBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+/*button dicrotion*/
+.purchase-btn a {
+    text-decoration: none; 
+    font-family: 'Noto Kufi Arabic', sans-serif;
+    
+}
+
+
+/* Header and top bar */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black; /* Changed from #336 to black */
+    padding: 13px 50px;
+    margin: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.top-bar .logo h1 {
+    color: #fff;
+    font-size: 17px;
+    text-align: left;
+    margin: 0;
+    
+}
+
+.top-bar nav ul {
+    flex-direction: column;
+        gap: 20px;
+         text-align: left;
+}
+
+.top-bar nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.3s ease;
+    height: 80px;
+    width: 100px;
+}
+
+.top-bar nav ul li a:hover {
+    color: #FFD700;
+}
+
+/* Main Content */
+.main-content {
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.main-content h3 {
+    font-size: 20px;
+    margin-bottom: 0px;
+    color: #394;
+}
+
+/* Miner Cards Section */
+.miner-cards {
+    display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 7px;
+      justify-items: center;
+      align-items: center;
+      padding: 1px;
+}
+.miner-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 8px;
+    
+}
+.topgiflogo {
+    width: 50px;
+    position: absolute;
+    box-shadow: 0%;
+    top: 2px;
+    left: 0px;
+}
+.cryptogif {
+    width: 90px;
+    position: absolute;
+    top: 20px;
+    left: 0px;
+}
+
+.toplogo {
+    width: 50px;
+    position: absolute;
+    box-shadow: none;
+    top: 3px;
+    left: 30px;
+}
+.level1 { 
+    width: 60px;
+    position: relative;
+    left: 1px;
+    top: 15px;
+    left: 0px;
+    
+}
+.riyal {
+    width: 12px;
+    position: relative;
+    left: 5%;
+    top: 1px;
+    left: auto;
+    margin: auto;
+}
+
+.miner-card {
+    background-color: #fff;
+      padding: 10px;
+      max-width: 200px;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      animation: fadeInUp 0.8s ease;
+}
+
+.miner-card:nth-child(1) .rate {
+      color: #fff;
+      background-color: #003366;
+}
+
+.miner-card:nth-child(2) .rate {
+      color: #fff;
+      background-color: #3399ff;
+}
+
+.miner-card:nth-child(3) .rate {
+      color: #fff;
+      background-color: #ffcc33;
+}
+
+.miner-card:nth-child(4) .rate {
+      color: #fff;
+      background-color: #003300;
+}
+
+.miner-card:nth-child(5) .rate {
+      color: #fff;
+      background-color: #9933cc;
+}
+
+.miner-card:nth-child(6) .rate {
+      color: #fff;
+      background-color: #669900;
+}
+
+.miner-card:nth-child(7) .rate {
+      color: #fff;
+      background-color: #00cccc;
+}
+
+.miner-card:nth-child(8) .rate {
+      color: #fff;
+      background-color: #ffcc00;
+}
+
+
+
+.miner-card h3 {
+      font-size: 15px;
+      color: #333;
+      position: relative;
+      color: #fff;
+      border: none;
+      padding: 0px;
+      margin: 0px;
+      font-size: 15px;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: background-color 0.2s ease;
+}
+
+.miner-card h4 {
+    font-size: 15px;
+    
+}
+
+.miner-card p {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: auto;
+    padding: auto;
+    
+}
+
+.miner-card button {
+    background-color: #FFD700;
+      color: #333;
+      position: relative;
+      border: none;
+      padding: 2px;
+      margin: 0px;
+      font-size: 15px;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: background-color 0.2s ease;
+}
+
+.miner-card button:hover {
+    background-color: #ffcc00;
+}
+
+.miner-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    
+}
+
+
+/*center poster images */
+.centerpost {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+   
+    
+}
+
+/* Miner Info Section */
+.miner-info {
+    background-color: #fff;
+      padding: 15px;
+      text-align: center;
+      margin: 20px auto;
+      width: 70%;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.miner-info h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 2px;
+    padding: auto;
+    margin: auto;
+    
+}
+
+.miner-info p {
+    font-size: 18px;
+    color: #555;
+    
+}
+
+.miner-info .timer {
+    font-size: 24px;
+    margin-top: 20px;
+    color: #333;
+    width: 90%;
+}
+
+
+/* Footer */
+footer {
+    background-color: #387;
+      color: #fff;
+      text-align: center;
+      padding: 1px;
+}
+
+/* Responsive Design */
+@media (max-width: 650px) {
+    .miner-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .miner-card {
+        width: 90%;
+        margin-bottom: 10px;
+    }
+}
