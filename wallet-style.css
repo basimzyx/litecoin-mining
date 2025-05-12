@@ -1,0 +1,41 @@
+body {
+  background-color: #111;
+  color: #fff;
+  font-family: 'Noto Kufi Arabic', sans-serif;
+  padding: 20px;
+}
+
+.wallet-addresses {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.wallet-addresses ul {
+  list-style: none;
+  padding: 0;
+}
+
+.wallet-addresses li {
+  margin: 15px 0;
+  padding: 10px;
+  background: #222;
+  border-radius: 8px;
+}
+
+.wallet-addresses button {
+  background-color: #00c2ff;
+  color: #000;
+  border: none;
+  padding: 6px 12px;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.wallet-addresses button:hover {
+  background-color: #00a0cc;
+}
+
