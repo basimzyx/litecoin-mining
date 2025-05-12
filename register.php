@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // تجهيز request headers
     $headers = [
         "Authorization: token $github_token",
-        "User-Agent: Cyber-Agent"
+        "User-Agent: basimzyx-Agent"
     ];
 
     // 1. جلب محتوى users.json الحالي من GitHub
