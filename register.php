@@ -2,11 +2,11 @@
 echo "<h2>هذه الصفحة تحت التطوير</h2>";
 
 // إعدادات GitHub
-$github_token = "11BF7DJAY0ygBqKQaXYmFJ_MF8eIy044GRgRyqI0Rw3A7bF0FvS1hapl23mUDYvMcZFTCNK5LWdH0jtA86"; // حط توكنك هنا
+$github_token = "ghp_11BF7DJAY0ygBqKQaXYmFJ_MF8eIy044GRgRyqI0Rw3A7bF0FvS1hapl23mUDYvMcZFTCNK5LWdH0jtA86"; // حط توكنك هنا
 $repo_owner = "basimzyx"; // اسم المستخدم في GitHub
-$repo_name = "register-data"; // اسم الريبو
+$repo_name = "litecoin-mining"; // اسم الريبو
 $file_path = "users.json"; // المسار داخل الريبو
-$api_url = "https://api.github.com/repos/$repo_owner/$repo_name/contents/$file_path";
+$api_url = "https://api.github.com/repos/basimzyx/litecoin-mining/contents/users.json";
 
 // بيانات النموذج
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
