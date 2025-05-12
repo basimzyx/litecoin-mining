@@ -56,41 +56,67 @@
       cursor: pointer;
       color: #00c896;
     }
+    #message {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body><div class="container">
   <h2 id="form-title">تسجيل الدخول</h2>
-  <form id="authForm" method="POST" action="login.php">
+  <form id="authForm">
     <input type="email" name="email" placeholder="البريد الإلكتروني" required>
-    <input type="password" name="password" placeholder="كلمة المرور" required><div id="extraFields" style="display: none;">
-  <input type="password" name="confirm_password" placeholder="تأكيد كلمة المرور">
+    <input type="password" name="password" placeholder="كلمة المرور" required>
+    <div id="extraFields" style="display: none;">
+      <input type="password" name="confirm_password" placeholder="تأكيد كلمة المرور">
+    </div>
+    <button type="submit">متابعة</button>
+  </form>
+  <div class="toggle" onclick="toggleMode()">ليس لديك حساب؟ إنشاء حساب</div>
+  <div id="message"></div>
 </div>
 
-<button type="submit">متابعة</button>
-
-  </form>  <div class="toggle" onclick="toggleMode()">ليس لديك حساب؟ إنشاء حساب</div>
-</div><script>
+<script>
   let mode = 'login';
 
   function toggleMode() {
-    const form = document.getElementById('authForm');
     const title = document.getElementById('form-title');
     const extra = document.getElementById('extraFields');
     const toggleText = document.querySelector('.toggle');
 
     if (mode === 'login') {
       mode = 'register';
-      form.action = 'register.php';
       title.textContent = 'إنشاء حساب';
       extra.style.display = 'block';
       toggleText.textContent = 'لديك حساب؟ تسجيل الدخول';
     } else {
       mode = 'login';
-      form.action = 'login.php';
       title.textContent = 'تسجيل الدخول';
       extra.style.display = 'none';
       toggleText.textContent = 'ليس لديك حساب؟ إنشاء حساب';
     }
   }
-</script></body>
+
+  document.getElementById('authForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const url = mode === 'login' ? 'login.php' : 'register.php';
+
+    fetch(url, {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.text())
+    .then(response => {
+      document.getElementById('message').innerHTML = response;
+    })
+    .catch(err => {
+      document.getElementById('message').innerHTML = 'حدث خطأ أثناء المعالجة.';
+    });
+  });
+</script>
+</body>
 </html>
