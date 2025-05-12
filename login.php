@@ -2,11 +2,11 @@
 echo "<h2>هذه الصفحة تحت التطوير</h2>";
 
 // إعدادات GitHub
-$github_token = "ghp_xxxxxxxxxxxxxxxxx"; // حط التوكن هنا
-$repo_owner = "Cyber"; // اسمك في GitHub
-$repo_name = "register-data"; // اسم الريبو
+github_token = "ghp_11BF7DJAY0ygBqKQaXYmFJ_MF8eIy044GRgRyqI0Rw3A7bF0FvS1hapl23mUDYvMcZFTCNK5LWdH0jtA86"; // حط التوكن هنا
+$repo_owner = "basimzyx"; // اسمك في GitHub
+$repo_name = "litecoin-mining"; // اسم الريبو
 $file_path = "users.json"; // المسار داخل الريبو
-$api_url = "https://api.github.com/repos/$repo_owner/$repo_name/contents/$file_path";
+$api_url = "https://api.github.com/repos/basimzyx/litecoin-mining/contents/users.json";
 
 // بيانات النموذج
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // تجهيز headers
     $headers = [
         "Authorization: token $github_token",
-        "User-Agent: Cyber-Agent"
+        "User-Agent: basimzyx-Agent"
     ];
 
     // جلب ملف المستخدمين من GitHub
