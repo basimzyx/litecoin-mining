@@ -31,6 +31,18 @@ body {
 }
 
 
+
+price-box {
+  width: 100%;              /* العرض الكامل */
+  max-width: 1200px;        /* لو داير حد أقصى */
+  height: 80px;             /* ارتفاع أكبر */
+  margin: 1px auto;        /* وسط الصفحة */
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 10px #00ffc3aa;
+      position: absolute;
+}
+
 /*button dicrotion*/
 .purchase-btn a {
     text-decoration: none; 
@@ -52,6 +64,7 @@ body {
     z-index: 100;
 }
 
+
 .top-bar .logo h1 {
     color: #fff;
     font-size: 17px;
@@ -60,7 +73,8 @@ body {
     
 }
 
-.top-bar nav ul {
+
+.top-bar top-bar2 nav ul {
     flex-direction: column;
         gap: 20px;
          text-align: left;
