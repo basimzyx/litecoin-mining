@@ -5,9 +5,11 @@
   <title>LTCOIN</title>
   <link rel="icon" href="Image/litecoin2.png" type="image/x-icon"> 
   <link rel="stylesheet" href="./style.css">
-
+  
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=translatePage"></script>
 </head>
 <body>
+
 <!-- partial:index.partial.html -->
 <!DOCTYPE html>
 <html lang="en">
@@ -20,18 +22,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
   
+  
 </head>
 <body>
    <header>
+     
+
+</div>
     <div class="top-bar">
        <div class="logo">
         <h1 align="right">تعدين لايتكوين</h1>
-              <img src="Image/Markatogi.gif" class="topgiflogo">
+              <img src="Image/giffimage/Markatogi.gif" class="topgiflogo">
             </div>
          
             <nav>
                 <ul>
-                    <li><a href="./login-box.html"><i class="fas fa-sign-in-alt"></i>إنشا حساب</a></li>
+                    <li><a href="./login-box.html"><i class="fas fa-sign-in-alt">
+                      
+                      
+                      
+                    </i>
+                      إنشا حساب</a></li>
                 </ul>
             </nav>
         </div>
@@ -157,11 +168,42 @@
     <footer>
         <p><h6>All rights reserved &copy; 2025 TASMIMCRYPTO</h6></p>
     </footer>
-        
-    <script src="script.js"></script>
+
+  <!-- زر الترجمة -->
+<div id="translate-toggle" onclick="toggleTranslate()" title="ترجم الصفحة">
+  ترجمة
+</div>
+
+<!-- عنصر Google Translate -->
+<div id="google_translate_element" style="display: none;"></div>
+
+  
 </body>
 </html>
 
+  <script type="text/javascript">
+  function toggleTranslate() {
+    const box = document.getElementById('google_translate_element');
+    if (box.style.display === "none") {
+      box.style.display = "block";
+      box.style.opacity = "0";
+      setTimeout(() => box.style.opacity = "1", 100); // حركة ناعمة
+    } else {
+      box.style.opacity = "0";
+      setTimeout(() => box.style.display = "none", 300);
+    }
+  }
+
+  function translatePage() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'ar',
+      includedLanguages: 'en,fr,de,es,it',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=translatePage"></script>
+  
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const buttons = document.querySelectorAll(".purchase-btn");
@@ -172,4 +214,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+  
 </script>
