@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تسجيل الدخول و إنشاء حساب</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+    body, html {
+      height: 100%;
+      font-family: 'Cairo', sans-serif;
+      overflow: hidden;
+      direction: rtl;
+    }
+    #bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+    }
+    .form-container {
+      position: absolute;
+      top: 50%;
+      right: 50%;
+      transform: translate(50%, -50%);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255,255,255,0.2);
+      width: 300px;
+      color: white;
+      animation: fadeIn 1s ease;
+      text-align: right;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translate(50%, -60%);}
+      to {opacity: 1; transform: translate(50%, -50%);}
+    }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 10px;
+      text-align: right;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: #2a9df4;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .toggle-link {
+      margin-top: 10px;
+      display: block;
+      text-align: center;
+      cursor: pointer;
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg"></canvas>
+  <div class="form-container" id="formBox">
+    <h2 id="formTitle">تسجيل الدخول</h2>
+    <form id="authForm">
+      <input type="email" id="email" placeholder="البريد الإلكتروني" required />
+      <input type="password" id="password" placeholder="كلمة المرور" required />
+      <div id="signupExtra" style="display:none;">
+        <input type="text" id="username" placeholder="اسم المستخدم" required />
+      </div>
+      <button type="submit">إرسال</button>
+    </form>
+    <span class="toggle-link" onclick="toggleForm()">إنشاء حساب جديد</span>
+  </div>  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r148/three.min.js"></script>  <script>
+    let scene = new THREE.Scene();
+    let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    let renderer = new THREE.WebGLRenderer({canvas: document.getElementById('bg'), alpha: true});
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    let geometry = new THREE.IcosahedronGeometry(5, 1);
+    let material = new THREE.MeshStandardMaterial({ color: 0x00ffff, wireframe: true });
+    let mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    let light = new THREE.PointLight(0xffffff, 1, 100);
+    light.position.set(10, 10, 10);
+    scene.add(light);
+
+    camera.position.z = 15;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      mesh.rotation.x += 0.005;
+      mesh.rotation.y += 0.007;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    function toggleForm() {
+      const formTitle = document.getElementById('formTitle');
+      const signupExtra = document.getElementById('signupExtra');
+      const toggle = document.querySelector('.toggle-link');
+      if (signupExtra.style.display === 'none') {
+        signupExtra.style.display = 'block';
+        formTitle.textContent = 'إنشاء حساب جديد';
+        toggle.textContent = 'تسجيل الدخول';
+      } else {
+        signupExtra.style.display = 'none';
+        formTitle.textContent = 'تسجيل الدخول';
+        toggle.textContent = 'إنشاء حساب جديد';
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script></body>
+</html>
