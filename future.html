@@ -140,6 +140,15 @@
     let isSignup = false;
     let isArabic = true;
 
+    const placeholderMap = {
+      email: { ar: 'البريد الإلكتروني', en: 'Email Address' },
+      password: { ar: 'كلمة المرور', en: 'Password' },
+      password2: { ar: 'تأكيد كلمة المرور', en: 'Confirm Password' },
+      phone: { ar: 'رقم الجوال بدون كود', en: 'Phone without code' },
+      referral: { ar: 'رمز الإحالة (اختياري)', en: 'Referral Code (optional)' },
+      country_code: { ar: 'اختر كود الدولة', en: 'Select Country Code' },
+    };
+
     const countries = [
       { code: '+966', ar: 'السعودية', en: 'Saudi Arabia' },
       { code: '+20', ar: 'مصر', en: 'Egypt' },
@@ -161,12 +170,19 @@
 
     function populateCountries() {
       const select = document.getElementById('country_code');
-      select.innerHTML = `<option value="">${isArabic ? 'اختر كود الدولة' : 'Select Country Code'}</option>`;
+      select.innerHTML = `<option value="">${isArabic ? placeholderMap.country_code.ar : placeholderMap.country_code.en}</option>`;
       countries.forEach(c => {
         const opt = document.createElement('option');
         opt.value = c.code;
         opt.textContent = isArabic ? `${c.ar} (${c.code})` : `${c.en} (${c.code})`;
         select.appendChild(opt);
+      });
+    }
+
+    function updatePlaceholders() {
+      Object.keys(placeholderMap).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.placeholder = isArabic ? placeholderMap[id].ar : placeholderMap[id].en;
       });
     }
 
@@ -197,6 +213,7 @@
         referralHint.style.display = 'none';
         isSignup = false;
       }
+      updatePlaceholders();
     }
 
     function validateForm() {
@@ -256,8 +273,10 @@
       document.querySelector('.lang-switch').textContent = isArabic ? 'English' : 'العربية';
       toggleForm(); toggleForm();
       populateCountries();
+      updatePlaceholders();
     }
 
     populateCountries();
+    updatePlaceholders();
   </script></body>
 </html>
