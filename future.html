@@ -52,7 +52,7 @@
       outline: none;
       background-color: rgba(0, 0, 0, 0.3);
     }
-    button {
+    .btn {
       width: 100%;
       padding: 12px;
       border: none;
@@ -63,7 +63,7 @@
       cursor: pointer;
       transition: background 0.3s, transform 0.3s;
     }
-    button:hover {
+    .btn:hover {
       background-color: #00b2e2;
       transform: scale(1.02);
     }
@@ -89,6 +89,7 @@
       color: #ffeb3b;
       margin: -10px 0 10px 0;
       text-align: right;
+      display: none;
     }
     #strength {
       height: 5px;
@@ -97,10 +98,22 @@
       margin-bottom: 10px;
       transition: background 0.3s;
     }
+    .lang-switch {
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      background-color: #00d2ff;
+      color: black;
+      padding: 4px 10px;
+      font-size: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div class="form-container">
+    <div class="lang-switch" onclick="toggleLang()">English</div>
     <h2 id="formTitle">تسجيل الدخول</h2>
     <div id="error" class="error-msg"></div>
     <form id="authForm" method="POST" action="login.php" onsubmit="return validateForm()">
@@ -111,55 +124,77 @@
 
     <select name="country_code" id="country_code" required>
       <option value="">اختر كود الدولة</option>
-      <option value="+966">السعودية (+966)</option>
-      <option value="+20">مصر (+20)</option>
-      <option value="+971">الإمارات (+971)</option>
-      <option value="+965">الكويت (+965)</option>
-      <option value="+968">عمان (+968)</option>
-      <option value="+974">قطر (+974)</option>
-      <option value="+962">الأردن (+962)</option>
-      <option value="+961">لبنان (+961)</option>
-      <option value="+963">سوريا (+963)</option>
-      <option value="+964">العراق (+964)</option>
-      <option value="+212">المغرب (+212)</option>
-      <option value="+213">الجزائر (+213)</option>
-      <option value="+216">تونس (+216)</option>
-      <option value="+249">السودان (+249)</option>
-      <option value="+967">اليمن (+967)</option>
-      <option value="+222">موريتانيا (+222)</option>
     </select>
-    <input type="tel" name="phone" id="phone" placeholder="رقم الجوال بدون كود الدولة" required />
+    <input type="tel" name="phone" id="phone" placeholder="رقم الجوال بدون كود" required />
 
-    <div class="referral-hint">إذا ما عندك رمز الدعوة، ممكن تستخدم: <strong>BON3EP</strong></div>
+    <div class="referral-hint" id="referralHint"></div>
     <input type="text" name="referral" id="referral" placeholder="رمز الإحالة (اختياري)" />
     <input type="hidden" name="bonus_code" value="bonus1" />
   </div>
 
-  <button type="submit">إرسال</button>
+  <button type="submit" class="btn" id="submitBtn">تسجيل الدخول</button>
 </form>
 <span class="toggle-link" onclick="toggleForm()">إنشاء حساب جديد</span>
 
   </div>  <script>
     let isSignup = false;
+    let isArabic = true;
+
+    const countries = [
+      { code: '+966', ar: 'السعودية', en: 'Saudi Arabia' },
+      { code: '+20', ar: 'مصر', en: 'Egypt' },
+      { code: '+971', ar: 'الإمارات', en: 'UAE' },
+      { code: '+965', ar: 'الكويت', en: 'Kuwait' },
+      { code: '+968', ar: 'عمان', en: 'Oman' },
+      { code: '+974', ar: 'قطر', en: 'Qatar' },
+      { code: '+962', ar: 'الأردن', en: 'Jordan' },
+      { code: '+961', ar: 'لبنان', en: 'Lebanon' },
+      { code: '+963', ar: 'سوريا', en: 'Syria' },
+      { code: '+964', ar: 'العراق', en: 'Iraq' },
+      { code: '+212', ar: 'المغرب', en: 'Morocco' },
+      { code: '+213', ar: 'الجزائر', en: 'Algeria' },
+      { code: '+216', ar: 'تونس', en: 'Tunisia' },
+      { code: '+249', ar: 'السودان', en: 'Sudan' },
+      { code: '+967', ar: 'اليمن', en: 'Yemen' },
+      { code: '+222', ar: 'موريتانيا', en: 'Mauritania' }
+    ];
+
+    function populateCountries() {
+      const select = document.getElementById('country_code');
+      select.innerHTML = `<option value="">${isArabic ? 'اختر كود الدولة' : 'Select Country Code'}</option>`;
+      countries.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.code;
+        opt.textContent = isArabic ? `${c.ar} (${c.code})` : `${c.en} (${c.code})`;
+        select.appendChild(opt);
+      });
+    }
 
     function toggleForm() {
       const form = document.getElementById('authForm');
       const formTitle = document.getElementById('formTitle');
       const signupExtra = document.getElementById('signupExtra');
       const toggle = document.querySelector('.toggle-link');
+      const submitBtn = document.getElementById('submitBtn');
+      const referralHint = document.getElementById('referralHint');
       document.getElementById('error').textContent = "";
 
       if (!isSignup) {
         signupExtra.style.display = 'block';
         form.setAttribute('action', 'register.php');
-        formTitle.textContent = 'إنشاء حساب جديد';
-        toggle.textContent = 'تسجيل الدخول';
+        formTitle.textContent = isArabic ? 'إنشاء حساب جديد' : 'Create New Account';
+        toggle.textContent = isArabic ? 'تسجيل الدخول' : 'Login';
+        submitBtn.textContent = isArabic ? 'إنشاء الحساب' : 'Register';
+        referralHint.style.display = 'block';
+        referralHint.innerHTML = isArabic ? 'إذا ما عندك رمز الدعوة، ممكن تستخدم: <strong>BON3EP</strong>' : 'If you don’t have a referral code, use: <strong>BON3EP</strong>';
         isSignup = true;
       } else {
         signupExtra.style.display = 'none';
         form.setAttribute('action', 'login.php');
-        formTitle.textContent = 'تسجيل الدخول';
-        toggle.textContent = 'إنشاء حساب جديد';
+        formTitle.textContent = isArabic ? 'تسجيل الدخول' : 'Login';
+        toggle.textContent = isArabic ? 'إنشاء حساب جديد' : 'Create New Account';
+        submitBtn.textContent = isArabic ? 'تسجيل الدخول' : 'Login';
+        referralHint.style.display = 'none';
         isSignup = false;
       }
     }
@@ -175,15 +210,15 @@
         const code = document.getElementById('country_code').value;
 
         if (!email.includes('@')) {
-          errorBox.textContent = "البريد الإلكتروني غير صحيح";
+          errorBox.textContent = isArabic ? "البريد الإلكتروني غير صحيح" : "Invalid email address";
           return false;
         }
         if (pass1 !== pass2) {
-          errorBox.textContent = "كلمة المرور غير متطابقة";
+          errorBox.textContent = isArabic ? "كلمة المرور غير متطابقة" : "Passwords do not match";
           return false;
         }
         if (!code || phone.length < 6 || phone.startsWith('0')) {
-          errorBox.textContent = "رقم الجوال يجب أن لا يبدأ بصفر ويكون مكون من 6 أرقام على الأقل";
+          errorBox.textContent = isArabic ? "رقم الجوال يجب أن لا يبدأ بصفر ويكون مكون من 6 أرقام على الأقل" : "Phone must not start with 0 and be at least 6 digits";
           return false;
         }
       }
@@ -202,16 +237,27 @@
       switch(strengthValue) {
         case 0:
         case 1:
-          strength.style.background = '#e74c3c'; // ضعيف
+          strength.style.background = '#e74c3c';
           break;
         case 2:
         case 3:
-          strength.style.background = '#2ecc71'; // وسط
+          strength.style.background = '#2ecc71';
           break;
         case 4:
-          strength.style.background = '#f1c40f'; // قوي
+          strength.style.background = '#f1c40f';
           break;
       }
     }
+
+    function toggleLang() {
+      isArabic = !isArabic;
+      document.documentElement.lang = isArabic ? 'ar' : 'en';
+      document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+      document.querySelector('.lang-switch').textContent = isArabic ? 'English' : 'العربية';
+      toggleForm(); toggleForm();
+      populateCountries();
+    }
+
+    populateCountries();
   </script></body>
 </html>
