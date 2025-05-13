@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تسجيل الدخول و إنشاء حساب</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -13,124 +13,205 @@
     }
     body, html {
       height: 100%;
-      font-family: 'Cairo', sans-serif;
       overflow: hidden;
-      direction: rtl;
-    }
-    #bg {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
+      background: linear-gradient(145deg, #0f0c29, #302b63, #24243e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
     }
     .form-container {
-      position: absolute;
-      top: 50%;
-      right: 50%;
-      transform: translate(50%, -50%);
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(15px);
-      padding: 40px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(20px);
       border-radius: 20px;
-      box-shadow: 0 0 25px rgba(255,255,255,0.2);
-      width: 300px;
-      color: white;
-      animation: fadeIn 1s ease;
-      text-align: right;
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+      width: 360px;
+      padding: 30px;
+      animation: fadeIn 1.2s ease;
+      position: relative;
     }
     @keyframes fadeIn {
-      from {opacity: 0; transform: translate(50%, -60%);}
-      to {opacity: 1; transform: translate(50%, -50%);}
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
     }
-    .form-container h2 {
+    h2 {
       text-align: center;
       margin-bottom: 20px;
+      color: #00eaff;
     }
-    input[type="text"], input[type="email"], input[type="password"] {
+    input, select {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-bottom: 15px;
       border: none;
       border-radius: 10px;
-      text-align: right;
+      background-color: rgba(0, 0, 0, 0.2);
+      color: white;
+    }
+    input:focus, select:focus {
+      outline: none;
+      background-color: rgba(0, 0, 0, 0.3);
     }
     button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border: none;
-      background-color: #2a9df4;
-      color: white;
-      font-weight: bold;
       border-radius: 10px;
+      background-color: #00d2ff;
+      color: #000;
+      font-weight: bold;
       cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    button:hover {
+      background-color: #00b2e2;
+      transform: scale(1.02);
     }
     .toggle-link {
-      margin-top: 10px;
-      display: block;
       text-align: center;
+      display: block;
+      margin-top: 15px;
+      color: #ccc;
       cursor: pointer;
-      color: #ddd;
+      transition: color 0.3s;
+    }
+    .toggle-link:hover {
+      color: #fff;
+    }
+    .error-msg {
+      color: #ff6b6b;
+      margin-bottom: 10px;
+      text-align: right;
+      font-size: 14px;
+    }
+    .referral-hint {
+      font-size: 12px;
+      color: #ffeb3b;
+      margin: -10px 0 10px 0;
+      text-align: right;
+    }
+    #strength {
+      height: 5px;
+      border-radius: 5px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      transition: background 0.3s;
     }
   </style>
 </head>
 <body>
-  <canvas id="bg"></canvas>
-  <div class="form-container" id="formBox">
+  <div class="form-container">
     <h2 id="formTitle">تسجيل الدخول</h2>
-    <form id="authForm">
-      <input type="email" id="email" placeholder="البريد الإلكتروني" required />
-      <input type="password" id="password" placeholder="كلمة المرور" required />
-      <div id="signupExtra" style="display:none;">
-        <input type="text" id="username" placeholder="اسم المستخدم" required />
-      </div>
-      <button type="submit">إرسال</button>
-    </form>
-    <span class="toggle-link" onclick="toggleForm()">إنشاء حساب جديد</span>
-  </div>  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r148/three.min.js"></script>  <script>
-    let scene = new THREE.Scene();
-    let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    let renderer = new THREE.WebGLRenderer({canvas: document.getElementById('bg'), alpha: true});
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    <div id="error" class="error-msg"></div>
+    <form id="authForm" method="POST" action="login.php" onsubmit="return validateForm()">
+      <input type="email" name="email" id="email" placeholder="البريد الإلكتروني" required />
+      <input type="password" name="password" id="password" placeholder="كلمة المرور" required oninput="checkStrength(this.value)" />
+      <div id="strength"></div><div id="signupExtra" style="display:none;">
+    <input type="password" name="password2" id="password2" placeholder="تأكيد كلمة المرور" required />
 
-    let geometry = new THREE.IcosahedronGeometry(5, 1);
-    let material = new THREE.MeshStandardMaterial({ color: 0x00ffff, wireframe: true });
-    let mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+    <select name="country_code" id="country_code" required>
+      <option value="">اختر كود الدولة</option>
+      <option value="+966">السعودية (+966)</option>
+      <option value="+20">مصر (+20)</option>
+      <option value="+971">الإمارات (+971)</option>
+      <option value="+965">الكويت (+965)</option>
+      <option value="+968">عمان (+968)</option>
+      <option value="+974">قطر (+974)</option>
+      <option value="+962">الأردن (+962)</option>
+      <option value="+961">لبنان (+961)</option>
+      <option value="+963">سوريا (+963)</option>
+      <option value="+964">العراق (+964)</option>
+      <option value="+212">المغرب (+212)</option>
+      <option value="+213">الجزائر (+213)</option>
+      <option value="+216">تونس (+216)</option>
+      <option value="+249">السودان (+249)</option>
+      <option value="+967">اليمن (+967)</option>
+      <option value="+222">موريتانيا (+222)</option>
+    </select>
+    <input type="tel" name="phone" id="phone" placeholder="رقم الجوال بدون كود الدولة" required />
 
-    let light = new THREE.PointLight(0xffffff, 1, 100);
-    light.position.set(10, 10, 10);
-    scene.add(light);
+    <div class="referral-hint">إذا ما عندك رمز الدعوة، ممكن تستخدم: <strong>BON3EP</strong></div>
+    <input type="text" name="referral" id="referral" placeholder="رمز الإحالة (اختياري)" />
+    <input type="hidden" name="bonus_code" value="bonus1" />
+  </div>
 
-    camera.position.z = 15;
+  <button type="submit">إرسال</button>
+</form>
+<span class="toggle-link" onclick="toggleForm()">إنشاء حساب جديد</span>
 
-    function animate() {
-      requestAnimationFrame(animate);
-      mesh.rotation.x += 0.005;
-      mesh.rotation.y += 0.007;
-      renderer.render(scene, camera);
-    }
-    animate();
+  </div>  <script>
+    let isSignup = false;
 
     function toggleForm() {
+      const form = document.getElementById('authForm');
       const formTitle = document.getElementById('formTitle');
       const signupExtra = document.getElementById('signupExtra');
       const toggle = document.querySelector('.toggle-link');
-      if (signupExtra.style.display === 'none') {
+      document.getElementById('error').textContent = "";
+
+      if (!isSignup) {
         signupExtra.style.display = 'block';
+        form.setAttribute('action', 'register.php');
         formTitle.textContent = 'إنشاء حساب جديد';
         toggle.textContent = 'تسجيل الدخول';
+        isSignup = true;
       } else {
         signupExtra.style.display = 'none';
+        form.setAttribute('action', 'login.php');
         formTitle.textContent = 'تسجيل الدخول';
         toggle.textContent = 'إنشاء حساب جديد';
+        isSignup = false;
       }
     }
 
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+    function validateForm() {
+      const errorBox = document.getElementById('error');
+      errorBox.textContent = "";
+      if (isSignup) {
+        const email = document.getElementById('email').value;
+        const pass1 = document.getElementById('password').value;
+        const pass2 = document.getElementById('password2').value;
+        const phone = document.getElementById('phone').value;
+        const code = document.getElementById('country_code').value;
+
+        if (!email.includes('@')) {
+          errorBox.textContent = "البريد الإلكتروني غير صحيح";
+          return false;
+        }
+        if (pass1 !== pass2) {
+          errorBox.textContent = "كلمة المرور غير متطابقة";
+          return false;
+        }
+        if (!code || phone.length < 6 || phone.startsWith('0')) {
+          errorBox.textContent = "رقم الجوال يجب أن لا يبدأ بصفر ويكون مكون من 6 أرقام على الأقل";
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function checkStrength(password) {
+      const strength = document.getElementById('strength');
+      let strengthValue = 0;
+
+      if (password.length > 5) strengthValue++;
+      if (/[A-Z]/.test(password)) strengthValue++;
+      if (/[0-9]/.test(password)) strengthValue++;
+      if (/[^A-Za-z0-9]/.test(password)) strengthValue++;
+
+      switch(strengthValue) {
+        case 0:
+        case 1:
+          strength.style.background = '#e74c3c'; // ضعيف
+          break;
+        case 2:
+        case 3:
+          strength.style.background = '#2ecc71'; // وسط
+          break;
+        case 4:
+          strength.style.background = '#f1c40f'; // قوي
+          break;
+      }
+    }
   </script></body>
 </html>
